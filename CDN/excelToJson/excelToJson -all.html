@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ <style>
+        body {
+            background: #222831;
+            color: #F6F6F6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        button {
+            border: none;
+            padding: 5px;
+            border-radius: 4px;
+            background: #F6F6F6;
+        }
+    </style>
+</head>
+
+<body>
+    <code>
+        <pre id="result">
+
+        </pre>
+    </code>
+    <button onclick="excelToNode()">Generate Excel</button>
+    <script src="../dist/excel-table.umd.cjs"></script>
+    <script>
+        const link = "./cdv.xlsx"
+
+        function excelToNode() {
+            ExcelTable.excelToJson(link, null, false, "override").then(res => {
+                console.log(res);
+                document.getElementById
+                    ("result").innerText = JSON.stringify(res, null, 1);
+            })
+        }
+    </script>
+</body>
+
+</html>
