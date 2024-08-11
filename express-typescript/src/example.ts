@@ -1,4 +1,10 @@
 //<https: //colorhunt.co/palette/f9ed69f08a5db83b5e6a2c70>
+import fetch from "cross-fetch";
+export async function callApi(url:string) {
+  return await fetch(url).then((res) => {
+    return res.arrayBuffer();
+  });
+}
 import type { DataModel } from "mr-excel";
 export function ex1(): DataModel.ExcelTable {
   const data: DataModel.ExcelTable = {
@@ -2370,7 +2376,7 @@ export function ex10(): DataModel.ExcelTable {
       horizontal: "left",
       vertical: "center",
     } as DataModel.AlignmentOption,
-  } ;
+  };
   const rowStyle = {
     backgroundColor: colorPalette.c2,
     fontFamily: "Times New Roman",
@@ -2940,7 +2946,7 @@ export function ex14(): DataModel.ExcelTable {
           colIndex: number,
           fromHeader: boolean
         ) {
-          return null
+          return null;
           // if (!data) {
           //   return {};
           // }
@@ -4024,7 +4030,7 @@ export function ex22(): DataModel.ExcelTable {
     backgroundColor: colorPalette.c2,
     fontFamily: "Times New Roman",
     color: colorPalette.c1,
-  }as DataModel.StyleBody;
+  } as DataModel.StyleBody;
   const second = {
     type: "HF",
     backgroundColor: colorPalette.c1,
@@ -4266,7 +4272,7 @@ export function ex23(): DataModel.ExcelTable {
     backgroundColor: colorPalette.c4,
     fontFamily: "Times New Roman",
     color: colorPalette.c2,
-  }as DataModel.StyleBody;
+  } as DataModel.StyleBody;
   const data: DataModel.ExcelTable = {
     creator: "mr",
     styles: {
@@ -6432,5 +6438,5 @@ export function ex32(): DataModel.ExcelTable {
       },
     ],
   };
-  return data
+  return data;
 }

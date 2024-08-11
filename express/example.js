@@ -2855,7 +2855,7 @@ export function ex16() {
         shiftTop: 1,
         shiftLeft: 1,
         title: {
-          comment: "This is comment on table",
+          // comment: "This is comment on table",
           shiftTop: 1,
           shiftLeft: -1,
           consommeRow: 4,
@@ -2932,17 +2932,26 @@ export function ex16() {
             return result.result;
           }
         },
-        commentCondition: function (o, r, i, s, u, c) {
-          if (c) {
-            let d = o.text.charAt(0);
+        commentCondition: function (
+          data,
+          object,
+          headerKey,
+          rowIndex,
+          colIndex,
+          fromHeader
+        ) {
+          console.log(data, object, headerKey, rowIndex, colIndex, fromHeader);
+
+          if (fromHeader) {
+            let d = data.text.charAt(0);
             if (d.toUpperCase() != d)
               return {
                 comment: `
-  Header should start with ${d.toUpperCase()}`,
+          Header should start with ${d.toUpperCase()}`,
                 author: "System",
               };
           }
-          return true;
+          return false;
         },
         styleCellCondition(o, r, s, i, u) {
           return u
@@ -3754,195 +3763,6 @@ export function ex22() {
   };
   return data;
 }
-// export function ex23() {
-//   const colorPalette = {
-//     c1: "2C3639",
-//     c2: "3F4E4F",
-//     c3: "A27B5C",
-//     c4: "DCD7C9",
-//   };
-//   const rowStyle = {
-//     backgroundColor: colorPalette.c2,
-//     fontFamily: "Times New Roman",
-//     color: colorPalette.c4,
-//   };
-//   const headerStyle = {
-//     backgroundColor: colorPalette.c4,
-//     fontFamily: "Times New Roman",
-//     color: colorPalette.c2,
-//   };
-//   const headers = [
-//     { label: "Date", text: "Date" },
-//     { label: "Time", text: "Time" },
-//     { label: "Percentage", text: "Percentage" },
-//     { label: "Float", text: "Float" },
-//     { label: "Fraction", text: "Fraction" },
-//     { label: "Long Number Column 1", text: "Long Number Column 1", size: 50 },
-//     { label: "Long Number Column 2", text: "Long Number Column 2", size: 50 },
-//   ];
-//   const items = [
-//     {
-//       Date: "2023-08-01",
-//       Time: "09:00 AM",
-//       Percentage: 0.7525,
-//       Float: 0.7525,
-//       Fraction: "1/4",
-//       "Long Number Column 1": 123456789012345,
-//       "Long Number Column 2": 987654321098765,
-//     },
-//     {
-//       Date: "2023-08-02",
-//       Time: "02:30 PM",
-//       Percentage: 0.4275,
-//       Float: 0.4275,
-//       Fraction: "3/8",
-//       "Long Number Column 1": 456789012345678,
-//       "Long Number Column 2": 876543210987654,
-//     },
-//     {
-//       Date: "2023-08-03",
-//       Time: "10:45 AM",
-//       Percentage: 0.955,
-//       Float: 0.955,
-//       Fraction: "5/6",
-//       "Long Number Column 1": 789012345678901,
-//       "Long Number Column 2": 765432109876543,
-//     },
-//     {
-//       Date: "2023-08-04",
-//       Time: "04:15 PM",
-//       Percentage: 0.2875,
-//       Float: 0.2875,
-//       Fraction: "2/7",
-//       "Long Number Column 1": 123450987654321,
-//       "Long Number Column 2": 654321098765432,
-//     },
-//     {
-//       Date: "2023-08-05",
-//       Time: "08:20 AM",
-//       Percentage: 0.6,
-//       Float: 0.6,
-//       Fraction: "4/5",
-//       "Long Number Column 1": 543210987654321,
-//       "Long Number Column 2": 543210987654321,
-//     },
-//   ];
-//   const data = {
-//     creator: "mr",
-//     styles: {
-//       Date: {
-//         ...rowStyle,
-//         format: "short_date",
-//       },
-//       Time: {
-//         ...rowStyle,
-//         format: "time",
-//       },
-//       Percentage: {
-//         ...rowStyle,
-//         format: "percentage",
-//       },
-//       Float: {
-//         ...rowStyle,
-//         format: "float_2",
-//         alignment: {
-//           horizontal: "left",
-//         },
-//       },
-//       Fraction: {
-//         ...rowStyle,
-//         format: "fraction",
-//       },
-//       "Long Number Column 1": {
-//         ...rowStyle,
-//         format: "dollar_2",
-//         alignment: {
-//           indent: 3,
-//           rtl: true,
-//           horizontal: "left",
-//         },
-//       },
-//       "Long Number Column 2": {
-//         ...rowStyle,
-//         format: "num_sep",
-//         alignment: {
-//           ltr: true,
-//           horizontal: "left",
-//         },
-//       },
-//       headerStyle: {
-//         ...headerStyle,
-//       },
-//     },
-//     sheet: [
-//       {
-//         styleCellCondition(data, fullData, rowIndex, colIndex, fromHeader) {
-//           if (fromHeader) {
-//             return "headerStyle";
-//           } else {
-//             if (colIndex == 0) {
-//               return "Date";
-//             } else if (colIndex == 1) {
-//               return "Time";
-//             } else if (colIndex == 2) {
-//               return "Percentage";
-//             } else if (colIndex == 3) {
-//               return "Float";
-//             } else if (colIndex == 4) {
-//               return "Fraction";
-//             } else if (colIndex == 5) {
-//               return "Long Number Column 1";
-//             } else {
-//               return "Long Number Column 2";
-//             }
-//           }
-//         },
-//         headers: [],
-//         data: [],
-//       },
-//     ],
-//   };
-//   ExcelTable.addGlobalOptionFromExcelTable("global-1", data);
-//   ExcelTable.generateExcel(
-//     {
-//       sheet: [
-//         {
-//           headers,
-//           data: items,
-//         },
-//       ],
-//     },
-//     "global-1"
-//   );
-// }
-// let flag = false;
-// function switchStyle() {
-//   if (!flag) {
-//     ExcelTable.addGlobalOptions(
-//       "global-1",
-//       "styles.headerStyle.backgroundColor",
-//       colorPalette.c2
-//     );
-//     ExcelTable.addGlobalOptions(
-//       "global-1",
-//       "styles.headerStyle.color",
-//       colorPalette.c4
-//     );
-//   } else {
-//     ExcelTable.addGlobalOptions(
-//       "global-1",
-//       "styles.headerStyle.backgroundColor",
-//       colorPalette.c4
-//     );
-//     ExcelTable.addGlobalOptions(
-//       "global-1",
-//       "styles.headerStyle.color",
-//       colorPalette.c2
-//     );
-//   }
-//   flag = !flag;
-// return data;
-// }
 export function ex24() {
   const data = {
     creator: "mr",
@@ -6536,4 +6356,5 @@ export function ex35() {
       },
     ],
   };
+  return data
 }

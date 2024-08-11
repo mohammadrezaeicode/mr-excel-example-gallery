@@ -8,7 +8,7 @@ import * as Ex from './example';
 })
 export class AppComponent {
   title = 'angular';
-  items = Array(35);
+  items = Array(32);
   generateExcel(i: number) {
     if (i != 23 && i > 0 && i <= 35) {
       import('mr-excel').then((m) => {
