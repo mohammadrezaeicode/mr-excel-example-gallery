@@ -84,12 +84,21 @@
               vertical: "center",
             },
           },
-          t2: {
-            size: 40,
-            color: "FFFFFF",
+          headC1:{
+            size: 15,
+            color: "16404D",
           },
-          t1: {
-            color: "555555",
+          headC2:{
+            size: 10,
+            color:"A31D1D" ,
+          },
+          bodyC1:{
+            size:10,
+            color:"FBF5E5"
+          },
+          bodyC2:{
+            size: 15,
+            color: "FFEB00",
           },
           "c0<0.3": {
             backgroundColor: "DCD6F7",
@@ -115,6 +124,23 @@
         },
         sheet: [
           {
+            multiStyleCondition(data,object,headerKey,rowIndex,colIndex,fromHeader){
+              if(fromHeader){
+                let sp=data.text.split("")
+                sp= sp.reduce((result,current,index)=>([...result,{
+                  value:current,
+                  styleId:index%2==0?"headC1":"headC2"
+                }]),[])                
+                return sp;
+              }else{
+                let sp=data.split("")
+                sp= sp.reduce((result,current,index)=>([...result,{
+                  value:current,
+                  styleId:index%2==0?"bodyC1":"bodyC2"
+                }]),[])                
+                return sp;
+              }
+            },
             shiftTop: 1,
             shiftLeft: 1,
             title: {
@@ -123,37 +149,6 @@
               shiftLeft: -1,
               consommeRow: 4,
               consommeCol: 6,
-              multiStyleValue: [
-                {
-                  style: "t2",
-                  value: "T",
-                },
-                {
-                  // style:"t1",
-                  value: "i",
-                },
-                {
-                  style: "t2",
-                  value: "t",
-                },
-                {
-                  // style:"t1",
-                  value: "l",
-                },
-                {
-                  style: "t2",
-                  value: "e",
-                },
-              ],
-              // multiStyleValue: {
-              //     reg: [
-              //         {
-              //             reg: /t/gi,
-              //             styleId: 't2'
-              //         }
-              //     ]
-              // },
-              // height: 100,
               styleId: "title",
               text: "Title",
             },
@@ -179,6 +174,7 @@ Header should start with ${textDataC0.toUpperCase()}`,
             },
             styleCellCondition(data, fullData, rowIndex, colIndex, fromHeader) {
               if (fromHeader) {
+                
                 return "headerStyle";
               } else {
                 if (colIndex == 0 && data < 0.3) {
@@ -210,20 +206,6 @@ Header should start with ${textDataC0.toUpperCase()}`,
               {
                 label: "c3",
                 text: "Name",
-                multiStyleValue: [
-                  {
-                    value: "N",
-                    style: "t1",
-                  },
-                  {
-                    value: "a",
-                    style: "t2",
-                  },
-                ],
-                //  {
-                //     N: 't1',
-                //     a: 't2'
-                // }
               },
               { label: "c5", text: "gender" },
             ],
@@ -243,17 +225,6 @@ Header should start with ${textDataC0.toUpperCase()}`,
                 c2: 180,
                 c3: "Michael",
                 c5: 1,
-                multiStyleValue: {
-                  c3: [
-                    {
-                      style: "t2",
-                      value: "M",
-                    },
-                    {
-                      value: "ichael",
-                    },
-                  ],
-                },
               },
               { c1: 0.412, c2: 130, c3: "Emily", c5: 0 },
               { c1: 0.587, c2: 160, c3: "William", c5: 1 },

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example 1</title>
+    <style>
+      body {
+        background: #222831;
+        color: #f6f6f6;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      button {
+        border: none;
+        padding: 5px;
+        border-radius: 4px;
+        background: #f6f6f6;
+      }
+    </style>
+  </head>
+
+  <body>
+    <p>For generate Excel please click the below button</p>
+    <button onclick="generateExcel()">Generate Excel</button>
+    <script src="../dist/excel-table.umd.cjs"></script>
+    <script>
+      const data = {
+        sheet: [{}, {},{}, {}],
+      };
+      function generateExcel() {
+        ExcelTable.generateExcel(data);
+      }
+    </script>
+  </body>
+</html>

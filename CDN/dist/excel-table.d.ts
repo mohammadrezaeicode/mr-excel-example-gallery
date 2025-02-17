@@ -42,6 +42,23 @@ declare type BorderOption = {
     };
 };
 
+declare class Buffer_2 extends Uint8Array {
+    constructor(str: string, encoding?: string);
+    constructor(size: number);
+    constructor(array: Uint8Array);
+    constructor(arrayBuffer: ArrayBuffer, byteOffset?: number, length?: number);
+    static alloc(size: number, fill?: string | Buffer_2 | number, encoding?: string): Buffer_2;
+    static from(arrayBuffer: ArrayBuffer, byteOffset?: number, length?: number): Buffer_2;
+    static from(data: number[]): Buffer_2;
+    static from(str: string, encoding?: string): Buffer_2;
+    write(string: string, offset?: number, length?: number, encoding?: string): number;
+    toString(encoding?: string, start?: number, end?: number): string;
+    slice(start?: number, end?: number): Buffer_2;
+    static concat(list: Buffer_2[], totalLength?: number): Buffer_2;
+    length: number;
+    byteOffset: number;
+}
+
 declare interface Checkbox {
     col: number;
     row: number;
@@ -94,7 +111,7 @@ export declare function convertTableToExcel(queryForTable?: string, table?: HTML
     keepStyle?: boolean;
     rowHeightScaleFunction?: RowHeightScaleFunction;
     colWidthScaleFunction?: ColWidthScaleFunction;
-}): Promise<string | number[] | Blob | Buffer | undefined>;
+}): Promise<string | number[] | DataModel.Buffer | Blob | undefined>;
 
 declare interface CustomFormulaSetting {
     isArray?: boolean;
@@ -128,6 +145,7 @@ declare namespace DataModel {
         Styles,
         Data,
         DataOptions,
+        DropDown,
         RowMap,
         ProtectionOption,
         ProtectionOptionKey,
@@ -171,7 +189,10 @@ declare namespace DataModel {
         ThemeOption,
         ExtractedData,
         ExtractResult,
-        ReadResult
+        ReadResult,
+        Buffer_2 as Buffer,
+        ReplacerOption,
+        ExcelToNodeConfig
     }
 }
 export { DataModel }
@@ -184,6 +205,11 @@ declare interface DataOptions {
     height?: number;
     multiStyleValue?: MapMultiStyleValue;
     comment?: MapComment;
+}
+
+declare interface DropDown {
+    option: (string | number)[];
+    for: string[];
 }
 
 declare interface ExcelTable extends ExcelTableOption {
@@ -209,7 +235,9 @@ declare interface ExcelTableOption {
 
 export declare function excelToJson(uri: string, fetchFunc?: Function, withHeader?: boolean, defaultPropertyPrefix?: string): Promise<Record<string, object>>;
 
-export declare function excelToNode(uri: string, queryForTable?: string | null, containerElement?: HTMLDivElement | null, config?: {
+export declare function excelToNode(uri: string, queryForTable?: string | null, containerElement?: HTMLDivElement | null, config?: ExcelToNodeConfig): Promise<HTMLTableElement[] | "Done">;
+
+declare interface ExcelToNodeConfig {
     fetchFunc?: Function;
     firstHeader?: boolean;
     returnTableNodes?: boolean;
@@ -221,7 +249,7 @@ export declare function excelToNode(uri: string, queryForTable?: string | null, 
     buttonContainerStyle?: object;
     buttonStyle?: object;
     activeButtonStyle?: object;
-}): Promise<HTMLTableElement[] | "Done">;
+}
 
 declare const exportedForTesting: {
     checkSheetValidWithOneRef: typeof checkSheetValidWithOneRef;
@@ -261,7 +289,7 @@ declare function generalValidationCheck(value: never, validateProperty: Validati
 
 export declare function generateCSV(excelTable: ExcelTable, asZip?: boolean): Promise<string[] | "done" | undefined>;
 
-export declare function generateExcel(data: ExcelTable, styleKey?: string): Promise<string | number[] | Blob | Buffer | undefined>;
+export declare function generateExcel(data: ExcelTable, styleKey?: string): Promise<string | number[] | Blob | Buffer_2 | undefined>;
 
 export declare function generateText(excelTable: ExcelTable, asZip?: boolean): Promise<string[] | "done" | undefined>;
 
@@ -269,7 +297,7 @@ declare interface Header {
     label: string;
     text: string;
     size?: number;
-    multiStyleValue?: MultiStyleValue;
+    multiStyleValue?: MultiStyleValue[];
     comment?: Comment_2 | string;
     conditionalFormatting?: ConditionalFormattingOption;
     formula?: {
@@ -322,7 +350,7 @@ declare interface MapComment {
 }
 
 declare interface MapMultiStyleValue {
-    [key: string]: MultiStyleValue;
+    [key: string]: MultiStyleValue[];
 }
 
 declare interface MergeRowConditionMap {
@@ -334,7 +362,7 @@ declare interface MergeRowConditionMap {
 
 declare type MergeRowDataConditionFunction = (data: Header | string | number | undefined, key: string | null, index: number, fromHeader: boolean) => boolean;
 
-declare type MultiStyleConditionFunction = (data: Header | string | number | undefined, object: null | Data, headerKey: string, rowIndex: number, colIndex: number, fromHeader: boolean) => MultiStyleValue | null;
+declare type MultiStyleConditionFunction = (data: Header | string | number | undefined, object: null | Data, headerKey: string, rowIndex: number, colIndex: number, fromHeader: boolean) => MultiStyleValue[] | null;
 
 declare interface MultiStyleRexValue {
     reg: RegExp | string;
@@ -342,8 +370,8 @@ declare interface MultiStyleRexValue {
 }
 
 declare interface MultiStyleValue {
-    [key: string]: string | undefined | MultiStyleRexValue[];
-    reg?: MultiStyleRexValue[];
+    value: string | number;
+    styleId?: string;
 }
 
 declare interface NoArgFormulaSetting {
@@ -383,6 +411,17 @@ declare interface ReadResult {
     sheetNameObject: Record<string, string>;
     sheetName: IterableIterator<[string, string]>;
     maxLengthOfColumn: Record<string, number>;
+}
+
+export declare function replaceInExcel(url: string | null | undefined, replaceData: Record<string, string | number | boolean>, option?: ReplacerOption): Promise<string | number[] | Blob | Buffer | undefined>;
+
+declare interface ReplacerOption {
+    fileName?: string;
+    backend?: boolean;
+    fetch?: Function;
+    data?: Blob | Buffer_2;
+    notSave?: boolean;
+    generateType?: "nodebuffer" | "array" | "binarystring" | "base64";
 }
 
 declare type RowHeightScaleFunction = (data: number, rowIndex: number, fromHeader: boolean) => number;
@@ -436,6 +475,7 @@ declare interface SheetOption {
     rtl?: boolean;
     pageBreak?: PageBreak;
     asTable?: AsTableOption;
+    dropDowns?: DropDown[];
 }
 
 declare interface SideBySide {
@@ -450,7 +490,7 @@ declare interface SideBySide {
     headerIndex?: number;
 }
 
-export declare function sideBySideLineByLine(data: SideBySide[][]): Promise<string | number[] | Blob | Buffer | undefined>;
+export declare function sideBySideLineByLine(data: SideBySide[][]): Promise<string | number[] | DataModel.Buffer | Blob | undefined>;
 
 declare interface SingleRefFormulaSetting {
     type: SingleRefFormulaType;
@@ -522,7 +562,7 @@ declare interface Styles {
 
 declare type StyleType = "conditionalFormatting" | "CF" | "headerFooter" | "HF";
 
-export declare function themeBaseGenerate(data: ExcelTable | Data[] | Data[][], option?: ThemeOption): Promise<string | number[] | Blob | Buffer | undefined>;
+export declare function themeBaseGenerate(data: ExcelTable | Data[] | Data[][], option?: ThemeOption): Promise<string | number[] | DataModel.Buffer | Blob | undefined>;
 
 declare interface ThemeOption {
     negativeColor?: boolean;
@@ -542,7 +582,7 @@ declare interface Title {
     height?: number;
     styleId?: string;
     text?: string;
-    multiStyleValue?: MultiStyleValue;
+    multiStyleValue?: MultiStyleValue[];
     comment?: Comment_2 | string;
 }
 
