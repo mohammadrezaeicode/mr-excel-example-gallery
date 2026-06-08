@@ -31,6 +31,12 @@ const app = express();
 
 app.use(morgan('dev'));
 
+app.get("/health", function (req, response) {
+  response.send({
+    status:"Healthy"
+  })
+})
+
 app.get("/list", function (req, response) {
   response.json(Object.keys(sharedExamples).filter(name => name.startsWith("ex")))
 })
