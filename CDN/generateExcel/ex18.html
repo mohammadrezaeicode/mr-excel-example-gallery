@@ -17,6 +17,7 @@
         }
 
         button {
+            cursor: pointer;
             border: none;
             padding: 5px;
             border-radius: 4px;
@@ -40,15 +41,17 @@
 
 <body>
     <p>For generate Excel please click the below button</p>
-    <button onclick="generateExcel()">Generate Excel</button>
+    <button onclick="generateExcel()" data-testid="generate-excel-btn">Generate Excel</button>
     <div class="link-container">Links: <a href="https://colorhunt.co">Color</a>
         <p> | </p><a
             href="https://github.com/mohammadrezaeicode/mr-excel-page-repo/blob/main/public/img/ex18.PNG?raw=true">Result</a>
     </div>
-<script src="../dist/excel-table.umd.cjs"></script>
+    <script src="../_dist/excel-table.umd.cjs"></script>
     <script>
         const data = {
             activateConditionalFormatting: true,
+            creator: 'MR Excel',
+            fileName: "ex18",
             styles: {
                 ct: {
                     type: "conditionalFormatting",

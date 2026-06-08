@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Example 7 - Group Rows Options</title>
+    <title>Example 7(Group Rows Options)</title>
     <style>
         body {
             background: #222831;
@@ -17,6 +17,7 @@
         }
 
         button {
+            cursor: pointer;
             border: none;
             padding: 5px;
             border-radius: 4px;
@@ -40,7 +41,7 @@
 
 <body>
     <p>For generate Excel please click the below button</p>
-    <button onclick="generateExcel()">Generate Excel</button>
+    <button onclick="generateExcel()" data-testid="generate-excel-btn">Generate Excel</button>
     <div class="link-container">Links: <a href="https://colorhunt.co/palette/fcd1d1ece2e1d3e0dcaee1e1">Color</a>
         <p> | </p><a
             href="https://github.com/mohammadrezaeicode/mr-excel-page-repo/blob/main/public/img/ex7.PNG?raw=true">Result</a>
@@ -66,7 +67,9 @@
             color: '112D4E'
         }
         const data = {
-            creator: 'mr',
+            creator: 'MR Excel',
+
+            fileName: "ex7",
             styles: {
                 rowStyle: {
                     ...rowStyle

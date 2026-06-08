@@ -1,0 +1,63 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.nginx
+      args:
+        MR_EXCEL_VERSION: V8.0.0
+    ports:
+      - "80:80"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/app"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+  express-app:
+      build:
+        context: .
+        dockerfile: ./docker/Dockerfile.express
+        args:
+          MR_EXCEL_VERSION: V8.0.0
+      ports:
+        - "4000:3000"
+      restart: unless-stopped
+      # volumes:
+      #   - ../shared-example:/app/node_modules/shared-example
+
+
+  # myapp:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.dotnet
+  #     args:
+  #       REPO_URL: https://github.com/mohammadrezaeicode/excel-validator.git
+  #   expose:
+  #     - "5000"
+  #   ports:
+  #     - "5000:5000"
+  #   restart: unless-stopped
+
+  myapp:
+    build:
+      context: ./excel-validator
+      dockerfile: Dockerfile
+    expose:
+      - "8080"
+    ports:
+      - "5000:8080"
+    restart: unless-stopped
+
+
+  # playwright:
+  #   image: mcr.microsoft.com/playwright:v1.55.0-noble
+  #   working_dir: /tests
+  #   volumes:
+  #     - ./playwright:/tests
+  #   depends_on:
+  #     frontend:
+  #       condition: service_healthy
+  #   command: >
+  #     sh -c "
+  #     npm ci &&
+  #     npx playwright test
+  #     "

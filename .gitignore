@@ -1,2 +1,14 @@
 node_modules
 .angular
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+tests/test-results/
+downloads
+
+*.ipynb
+backup

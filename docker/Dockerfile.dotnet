@@ -1,0 +1,31 @@
+# Build stage
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+
+RUN apt-get update && \
+    apt-get install -y git && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /src
+
+# Clone main branch
+ARG REPO_URL
+RUN git clone --branch main --single-branch ${REPO_URL} app
+
+WORKDIR /src/app
+
+# Restore, build, publish
+RUN dotnet restore
+RUN dotnet publish -c Release -o /app/publish
+
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+
+WORKDIR /app
+
+COPY --from=build /app/publish .
+
+EXPOSE 5000
+
+ENV ASPNETCORE_URLS=http://+:5000
+
+ENTRYPOINT ["dotnet", "validator.dll"]

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Example 2</title>
+    <title>Example 2(Save & Protection option)</title>
     <style>
         body {
             background: #222831;
@@ -17,6 +17,7 @@
         }
 
         button {
+            cursor: pointer;
             border: none;
             padding: 5px;
             border-radius: 4px;
@@ -27,12 +28,13 @@
 
 <body>
     <p>For generate Excel please click the below button</p>
-    <button onclick="generateExcel()">Generate Excel</button>
+    <button onclick="generateExcel()" data-testid="generate-excel-btn">Generate Excel</button>
     <script src="../dist/excel-table.umd.cjs"></script>
     <script>
         const data = {
             notSave: true,
-            creator: "mr",
+            fileName: "ex2",
+            creator: "MR Excel",
             created: "2023-08-12T02:08:04.469Z",
             modified: "2023-08-12T02:08:04.469Z",
             sheet: [

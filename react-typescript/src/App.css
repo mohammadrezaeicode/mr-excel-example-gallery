@@ -1,0 +1,20 @@
+.container{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(10px, 300px));
+  grid-template-rows: auto;
+  max-height: 100vh;
+  gap: 5px;
+}
+button{
+  border-radius: 5px;
+  min-height: 50px;
+  background-color: var(--button-background-color);
+  border-color: var(--button-border-color);
+  color: var(--button-color);
+  cursor: pointer;
+}
+h3{
+  margin: 10px 0;
+  text-align: center;
+  color: var(--button-color);
+}

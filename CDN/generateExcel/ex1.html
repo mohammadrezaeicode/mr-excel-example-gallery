@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Example 1</title>
+    <title>Example 1(Style & Formula)</title>
     <style>
         body {
             background: #222831;
@@ -17,6 +17,7 @@
         }
 
         button {
+            cursor: pointer;
             border: none;
             padding: 5px;
             border-radius: 4px;
@@ -27,12 +28,13 @@
 
 <body>
     <p>For generate Excel please click the below button</p>
-    <button onclick="generateExcel()">Generate Excel</button>
+    <button onclick="generateExcel()" data-testid="generate-excel-btn">Generate Excel</button>
     <script src="../dist/excel-table.umd.cjs"></script>
     <script>
         //<https://colorhunt.co/palette/f9ed69f08a5db83b5e6a2c70>
         const data = {
-            creator: "mr",
+            creator: "MR Excel",
+            fileName: "ex1",
             created: "2023-08-06T07:22:40Z",
             modified: "2023-08-06T07:22:40Z",
             styles: {
@@ -182,9 +184,7 @@
 
 
         function generateExcel() {
-
             ExcelTable.generateExcel(data);
-
         }
     </script>
 </body>

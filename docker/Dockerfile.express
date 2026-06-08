@@ -1,0 +1,34 @@
+# --- Build stage ---
+FROM node:24-alpine AS builder
+
+WORKDIR /app
+ARG MR_EXCEL_VERSION=V8.0.0
+
+
+# install git first
+RUN apk add --no-cache git
+
+COPY express/package*.json ./
+RUN npm ci --omit=dev --no-optional
+
+RUN npm install "github:mohammadrezaeicode/mr-excel-repo#${MR_EXCEL_VERSION}"
+# --- Production stage ---
+FROM node:24-alpine
+
+# Don't run as root
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
+WORKDIR /app
+
+# Copy only production deps + source
+COPY --from=builder /app/node_modules ./node_modules
+COPY express/. .
+COPY shared-example ./node_modules/shared-example
+
+# Set ownership
+RUN chown -R appuser:appgroup /app
+USER appuser
+
+EXPOSE 3000
+
+CMD ["node", "index.js"]

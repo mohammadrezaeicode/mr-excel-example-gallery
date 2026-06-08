@@ -17,6 +17,7 @@
         }
 
         button {
+            cursor: pointer;
             border: none;
             padding: 5px;
             border-radius: 4px;
@@ -39,7 +40,7 @@
 
 <body>
     <p>For generate Excel please click the below button</p>
-    <div class="fl"><button onclick="generateExcel()">Generate Excel</button><button onclick="switchStyle()">Switch
+    <div class="fl"><button onclick="generateExcel()" data-testid="generate-excel-btn">Generate Excel</button><button onclick="switchStyle()">Switch
             Style</button></div>
     <div class="link-container">Links: <a href="https://colorhunt.co">Color</a>
         <p> | </p><a
@@ -120,7 +121,8 @@
             }
         ]
         const data = {
-            creator: 'mr',
+            creator: 'MR Excel',
+            fileName: "ex23",
             styles: {
                 Date: {
                     ...rowStyle,

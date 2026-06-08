@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Example 4(Formula)</title>
+  <style>
+    body {
+      background: #222831;
+      color: #f6f6f6;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    button {
+      border: none;
+      padding: 5px;
+      border-radius: 4px;
+      background: #f6f6f6;
+    }
+
+    .link-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 5px;
+
+      color: #f6f6f6;
+    }
+
+    .link-container a {
+      color: #f6f6f6;
+    }
+  </style>
+</head>
+
+<body>
+  <p>For generate Excel please click the below button</p>
+  <button onclick="generateExcel()" data-testid="generate-excel-btn">Generate Excel</button>
+  <div class="link-container">
+    Links:
+    <a href="https://colorhunt.co/palette/2b2e4ae8454590374953354a">Color</a>
+    <p>|</p>
+    <a href="https://github.com/mohammadrezaeicode/mr-excel-page-repo/blob/main/public/img/ex4.PNG?raw=true">Result</a>
+  </div>
+  <script src="../dist/excel-table.umd.cjs"></script>
+  <script>
+    
+    let data = ""
+    for (let index = 0; index < 50_000_000; index++) {
+      console.log(index,data.length);
+      
+     data+="****"+index   
+     console.clear()
+    }
+    console.log("done");
+    
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+name: E2E + Functional Tests
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:   # allows external triggers
+    inputs:
+      reason:
+        description: 'Why this was triggered'
+        required: false
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build & start services
+      run: docker compose up -d --build
+
+    - name: Wait for all services to be healthy
+      run: |
+        echo "Waiting for containers to become healthy..."
+        TIMEOUT=120
+        ELAPSED=0
+        while true; do
+          UNHEALTHY=$(docker compose ps --format json \
+            | jq -r 'select(.Health != "" and .Health != "healthy") | .Name' \
+            | wc -l | tr -d ' ')
+          EXITED=$(docker compose ps --format json \
+            | jq -r 'select(.State == "exited") | .Name' \
+            | wc -l | tr -d ' ')
+
+          if [ "$EXITED" -gt "0" ]; then
+            echo "A container exited unexpectedly:"
+            docker compose ps
+            docker compose logs
+            exit 1
+          fi
+
+          if [ "$UNHEALTHY" -eq "0" ]; then
+            echo "All containers healthy."
+            break
+          fi
+
+          if [ "$ELAPSED" -ge "$TIMEOUT" ]; then
+            echo "Timeout waiting for healthy containers."
+            docker compose logs
+            exit 1
+          fi
+
+          sleep 5
+          ELAPSED=$((ELAPSED + 5))
+        done
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    - name: Run Playwright tests
+      run: npx playwright test
+    - uses: actions/upload-artifact@v7
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report
+        path: |
+          playwright-report/
+          downloads/
+          tests/test-results/
+        retention-days: 110

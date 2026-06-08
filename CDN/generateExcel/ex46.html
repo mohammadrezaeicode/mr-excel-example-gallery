@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Example 4(Formula)</title>
+  <style>
+    body {
+      background: #222831;
+      color: #f6f6f6;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    button {
+      border: none;
+      padding: 5px;
+      border-radius: 4px;
+      background: #f6f6f6;
+    }
+
+    .link-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 5px;
+
+      color: #f6f6f6;
+    }
+
+    .link-container a {
+      color: #f6f6f6;
+    }
+  </style>
+</head>
+
+<body>
+  <p>For generate Excel please click the below button</p>
+  <button onclick="generateExcel()" data-testid="generate-excel-btn">Generate Excel</button>
+  <div class="link-container">
+    Links:
+    <a href="https://colorhunt.co/palette/2b2e4ae8454590374953354a">Color</a>
+    <p>|</p>
+    <a href="https://github.com/mohammadrezaeicode/mr-excel-page-repo/blob/main/public/img/ex4.PNG?raw=true">Result</a>
+  </div>
+  <script src="../dist/excel-table.umd.cjs"></script>
+  <script>
+    const colorPalette = {
+      c1: "2B2E4A",
+      c2: "E84545",
+      c3: "903749",
+      c4: "53354A",
+    };
+    const data = {
+      creator: 'MR Excel',
+      fileName: "ex46",
+      mainFontFamily: "Cambria",
+      styles: {
+        headerStyle: {
+          backgroundColor: colorPalette.c1,
+          fontFamily: "Times New Roman",
+          color: colorPalette.c2,
+        }
+      },
+      sheet: [
+        {
+          zoomScale: {
+            scale: 200,
+            startAt: "F8"
+          },
+          dataValidations: [
+            {
+              type: "whole",
+              value: {
+                min: 1,
+                max: 50
+              },
+              start: "A1",
+              end: "C17",
+            },
+            {
+              type: "list",
+              start: "E3",
+              end: "F5",
+              value: {
+                start: "D5",
+                end: "F5",
+              },
+            },
+          ],
+          headerStyleKey: "headerStyle",
+          headers: [
+            { label: "Date", text: "Date" },
+            {
+              label: "Column 1",
+              text: "Column 1",
+            },
+            {
+              label: "Column 2",
+              text: "Column 2",
+            },
+            {
+              label: "Column 3",
+              text: "Column 3",
+            },
+            {
+              label: "Column 4",
+              text: "Column 4",
+            },
+            {
+              label: "Column 5",
+              text: "Column 5",
+            },
+          ],
+          data: [
+            {
+              Date: "2023-08-01",
+              "Column 1": 5,
+              "Column 2": 10,
+              "Column 3": 15,
+              "Column 4": 20,
+              "Column 5": 25,
+            },
+            {
+              Date: "2023-08-02",
+              "Column 1": 7,
+              "Column 2": 14,
+              "Column 3": 21,
+              "Column 4": 28,
+              "Column 5": 35,
+            },
+            {
+              Date: "2023-08-03",
+              "Column 1": 3,
+              "Column 2": 6,
+              "Column 3": 9,
+              "Column 4": 12,
+              "Column 5": 15,
+            },
+            {
+              Date: "2023-08-04",
+              "Column 1": 12,
+              "Column 2": 24,
+              "Column 3": 36,
+              "Column 4": 48,
+              "Column 5": 60,
+            },
+            {
+              Date: "2023-08-05",
+              "Column 1": 8,
+              "Column 2": 16,
+              "Column 3": 24,
+              "Column 4": 32,
+              "Column 5": 40,
+            },
+          ],
+        },
+      ],
+    };
+
+    function generateExcel() {
+      ExcelTable.generateExcel(data);
+    }
+  </script>
+</body>
+
+</html>

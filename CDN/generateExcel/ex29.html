@@ -17,6 +17,7 @@
         }
 
         button {
+            cursor: pointer;
             border: none;
             padding: 5px;
             border-radius: 4px;
@@ -39,7 +40,7 @@
 
 <body>
     <p>For generate Excel please click the below button</p>
-    <div class="fl"><button onclick="generateExcel()">Generate Excel</button></div>
+    <div class="fl"><button onclick="generateExcel()" data-testid="generate-excel-btn">Generate Excel</button></div>
     <div class="link-container">Links: <a href="https://colorhunt.co/palette/561c246d2932c7b7a3e8d8c4">Color</a>
         <p> | </p><a
             href="https://github.com/mohammadrezaeicode/mr-excel-page-repo/blob/main/public/img/ex29.PNG?raw=true">Result</a>
@@ -65,7 +66,8 @@
             color: colorPalette.c2
         }
         const data = {
-            creator: 'mr',
+            creator: 'MR Excel',
+            fileName: "ex29",
             styles: {
                 first,
                 second

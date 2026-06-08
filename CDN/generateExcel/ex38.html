@@ -17,6 +17,7 @@
         }
 
         button {
+            cursor: pointer;
             border: none;
             padding: 5px;
             border-radius: 4px;
@@ -40,7 +41,7 @@
 
 <body>
     <p>For generate Excel please click the below button</p>
-    <button onclick="generateExcel()">Generate Excel</button>
+    <button onclick="generateExcel()" data-testid="generate-excel-btn">Generate Excel</button>
     <div class="link-container">Links: <a href="https://colorhunt.co">Color</a>
         <p> | </p><a
             href="https://github.com/mohammadrezaeicode/mr-excel-page-repo/blob/main/public/img/ex17.PNG?raw=true">Result</a>
@@ -48,8 +49,8 @@
     <script src="../dist/excel-table.umd.cjs"></script>
     <script>
         const data = {
-            creator: 'mr',
-            fileName: "trd",
+            creator: 'MR Excel',
+            fileName: "ex38",
             sheet: [
                 {
                     checkbox: [
@@ -59,7 +60,7 @@
                             text: "Checkbox 1",
                             link: "G1"
                         },
-                         {
+                        {
                             col: 14,
                             row: 2,
                             text: "Checkbox 3",
@@ -71,41 +72,6 @@
                             link: "G3"
                         },
                     ],
-                    // images: [
-                    //     {
-                    //         url: 'https://mohammadrezaeicode.github.io/mr-excel-page/img/ezgif.com-gif-maker.gif',
-                    //         from: 'H1',
-                    //         type: 'one'
-                    //     },
-                    //     {
-                    //         url: 'https://mohammadrezaeicode.github.io/mr-excel-page/img/uniqe.jpg',
-                    //         from: 'H2',
-                    //         type: 'one'
-                    //     },
-
-                    //     {
-                    //         url: 'https://mohammadrezaeicode.github.io/mr-excel-page/img/ex.PNG',
-                    //         from: 'H3',
-                    //         type: 'one'
-                    //     },
-                    //     {
-                    //         url: 'https://mohammadrezaeicode.github.io/mr-excel-page/img/ex.PNG',
-                    //         from: 'H4',
-                    //         type: 'two'
-                    //     },
-                    //     {
-                    //         url: 'https://mohammadrezaeicode.github.io/mr-excel-page/img/ezgif.com-gif-maker.gif',
-                    //         from: 'E1',
-                    //         to: 'F10',
-                    //         type: 'two'
-                    //     },
-                    //     {
-                    //         url: 'https://mohammadrezaeicode.github.io/mr-excel-page/img/uniqe.jpg',
-                    //         from: 'H6',
-                    //         type: 'two'
-                    //     }
-                    // ],
-
                     headers: [
                         {
                             label: 'Name',

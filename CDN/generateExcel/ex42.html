@@ -1,267 +1,268 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Example 1</title>
-    <style>
-      body {
-        background: #222831;
-        color: #f6f6f6;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-      }
 
-      button {
-        border: none;
-        padding: 5px;
-        border-radius: 4px;
-        background: #f6f6f6;
-      }
-    </style>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Example 1</title>
+  <style>
+    body {
+      background: #222831;
+      color: #f6f6f6;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-  <body>
-    <p>For generate Excel please click the below button</p>
-    <button onclick="generateExcel()">Generate Excel</button>
-    <a href="./replacer.xlsx">replacer</a>
-    <script src="../dist/excel-table.umd.cjs"></script>
-    <script>
-        // https://colorhunt.co/palette/f9ed69f08a5db83b5e6a2c70
-        const data = {
-            // notSave: true,
-            creator: "John Doe",
-            created: "2023-08-10T10:00:00Z",
-            modified: "2023-08-10T12:30:00Z",
-            numberOfColumn: 5,
-            createType: "custom",
-            styles: {
-                headerStyle1: {
-                    fg: "#FF0000",
-                    fontColor: "#FFFFFF",
-                    fontFamily: "Arial",
-                    size: 14,
-                    alignment: {
-                        horizontal: "center",
-                        vertical: "middle",
-                        wrapText: "1",
-                        readingOrder: "2",
-                        textRotation: 0,
-                        indent: 0,
-                        rtl: false,
-                        ltr: true,
-                    },
-                    border: {
-                        full: {
-                            color: "#000000",
-                            style: "medium",
-                        },
-                        top: {
-                            color: "#00FF00",
-                            style: "thin",
-                        },
-                        left: {
-                            color: "#0000FF",
-                            style: "dashed",
-                        },
-                        right: {
-                            color: "#FF00FF",
-                            style: "double",
-                        },
-                        bottom: {
-                            color: "#FFFF00",
-                            style: "thick",
-                        },
-                    },
-                    format: "0.00",
-                },
-                cellStyle1: {
-                    fg: "#00FFFF",
-                    fontColor: "#000000",
-                    fontFamily: "Verdana",
-                    size: 12,
-                    alignment: {
-                        horizontal: "left",
-                        vertical: "top",
-                        wrapText: "0",
-                        shrinkToFit: "0",
-                        readingOrder: "1",
-                        textRotation: 45,
-                        indent: 2,
-                        rtl: true,
-                        ltr: false,
-                    },
-                    border: {
-                        full: {
-                            color: "#AAAAAA",
-                            style: "dotted",
-                        },
-                    },
-                    format: "yyyy-mm-dd",
-                },
+    button {
+      border: none;
+      padding: 5px;
+      border-radius: 4px;
+      background: #f6f6f6;
+    }
+  </style>
+</head>
+
+<body>
+  <p>For generate Excel please click the below button</p>
+  <button onclick="generateExcel()" data-testid="generate-excel-btn">Generate Excel</button>
+  <script src="../dist/excel-table.umd.cjs"></script>
+  <script>
+    // https://colorhunt.co/palette/f9ed69f08a5db83b5e6a2c70
+    const data = {
+      // notSave: true,
+      creator: 'MR Excel',
+      fileName: "ex42",
+      created: "2023-08-10T10:00:00Z",
+      modified: "2023-08-10T12:30:00Z",
+      numberOfColumn: 5,
+      createType: "custom",
+      styles: {
+        headerStyle1: {
+          fg: "#FF0000",
+          fontColor: "#FFFFFF",
+          fontFamily: "Arial",
+          size: 14,
+          alignment: {
+            horizontal: "center",
+            vertical: "middle",
+            wrapText: "1",
+            readingOrder: "2",
+            textRotation: 0,
+            indent: 0,
+            rtl: false,
+            ltr: true,
+          },
+          border: {
+            full: {
+              color: "#000000",
+              style: "medium",
             },
-            sheet: [
-                {
-                    name: "Sheet1",
-                    withoutHeader: false,
-                    formula: {
-                        "C5": {
-                            type: "SUM",
-                            start: "C2",
-                            end: "C4",
-                            styleId: "cellStyle1",
-                        },
-                        "D5": {
-                            type: "AVERAGE",
-                            start: "D2",
-                            end: "D4",
-                            styleId: "cellStyle1",
-                        },
-                    },
-                    selected: true,
-                    tabColor: "#FFFF00",
-                    sortAndfilter: {
-                        mode: "all",
-                        ref: "A1:D5",
-                    },
-                    state: "visible",
-                    headerRowOption: {
-                        outlineLevel: "string",
-                    },
-                    protectionOption: {
-                        sheet: "1",
-                        formatCells: "0",
-                        formatColumns: "0",
-                        formatRows: "0",
-                        insertColumns: "0",
-                        insertRows: "0",
-                        insertHyperlinks: "0",
-                        deleteColumns: "0",
-                        deleteRows: "0",
-                        sort: "0",
-                        autoFilter: "0",
-                        pivotTables: "0",
-                    },
-                    headerHeight: 30,
-                    headers: [
-                        {
-                            label: "name",
-                            text: "Name",
-                            size: 18,
-                            formula: {
-                                type: "MAX",
-                                styleId: "headerStyle1",
-                            },
-                        },
-                        {
-                            label: "age",
-                            text: "Age",
-                            size: 18,
-                        },
-                        {
-                            label: "score",
-                            text: "Score",
-                            size: 18,
-                        },
-                    ],
-                    data: [
-                        {
-                            name: "Alice",
-                            age: 25,
-                            score: 95,
-                            outlineLevel: 1,
-                            hidden: "0",
-                            rowStyle: "cellStyle1",
-                            height: 20,
-                        },
-                        {
-                            name: "Bob",
-                            age: 30,
-                            score: 80,
-                            outlineLevel: 1,
-                            hidden: "0",
-                            rowStyle: "cellStyle1",
-                            height: 20,
-                        },
-                        {
-                            name: "Charlie",
-                            age: 28,
-                            score: 90,
-                            outlineLevel: 1,
-                            hidden: "0",
-                            rowStyle: "cellStyle1",
-                            height: 20,
-                        },
-                        {
-                            name: "David",
-                            age: 22,
-                            score: 75,
-                            outlineLevel: 1,
-                            hidden: "0",
-                            rowStyle: "cellStyle1",
-                            height: 20,
-                        },
-                    ],
-                },
-                {
-                    name: "Sheet2",
-                    sortAndfilter: {
-                        mode: "ref",
-                        ref: "A1:B5",
-                    },
-                    state: "hidden",
-                    headers: [
-                        {
-                            label: "item",
-                            text: "Item",
-                            size: 16,
-                        },
-                        {
-                            label: "quantity",
-                            text: "Quantity",
-                            size: 16,
-                        },
-                    ],
-                    data: [
-                        {
-                            item: "Apples",
-                            quantity: 50,
-                            outlineLevel: 1,
-                            hidden: "1",
-                        },
-                        {
-                            item: "Bananas",
-                            quantity: 30,
-                            outlineLevel: 1,
-                            hidden: "1",
-                        },
-                        {
-                            item: "Oranges",
-                            quantity: 40,
-                            outlineLevel: 1,
-                            hidden: "1",
-                        },
-                        {
-                            item: "Grapes",
-                            quantity: 25,
-                            outlineLevel: 1,
-                            hidden: "1",
-                        },
-                    ],
-                },
-            ],
-        };
+            top: {
+              color: "#00FF00",
+              style: "thin",
+            },
+            left: {
+              color: "#0000FF",
+              style: "dashed",
+            },
+            right: {
+              color: "#FF00FF",
+              style: "double",
+            },
+            bottom: {
+              color: "#FFFF00",
+              style: "thick",
+            },
+          },
+          format: "0.00",
+        },
+        cellStyle1: {
+          fg: "#00FFFF",
+          fontColor: "#000000",
+          fontFamily: "Verdana",
+          size: 12,
+          alignment: {
+            horizontal: "left",
+            vertical: "top",
+            wrapText: "0",
+            shrinkToFit: "0",
+            readingOrder: "1",
+            textRotation: 45,
+            indent: 2,
+            rtl: true,
+            ltr: false,
+          },
+          border: {
+            full: {
+              color: "#AAAAAA",
+              style: "dotted",
+            },
+          },
+          format: "yyyy-mm-dd",
+        },
+      },
+      sheet: [
+        {
+          name: "Sheet1",
+          withoutHeader: false,
+          formula: {
+            C5: {
+              type: "SUM",
+              start: "C2",
+              end: "C4",
+              styleId: "cellStyle1",
+            },
+            D5: {
+              type: "AVERAGE",
+              start: "D2",
+              end: "D4",
+              styleId: "cellStyle1",
+            },
+          },
+          selected: true,
+          tabColor: "#FFFF00",
+          sortAndFilter: {
+            mode: "all",
+            ref: "A1:D5",
+          },
+          state: "visible",
+          headerRowOption: {
+            outlineLevel: "string",
+          },
+          protectionOption: {
+            sheet: "1",
+            formatCells: "0",
+            formatColumns: "0",
+            formatRows: "0",
+            insertColumns: "0",
+            insertRows: "0",
+            insertHyperlinks: "0",
+            deleteColumns: "0",
+            deleteRows: "0",
+            sort: "0",
+            autoFilter: "0",
+            pivotTables: "0",
+          },
+          headerHeight: 30,
+          headers: [
+            {
+              label: "name",
+              text: "Name",
+              size: 18,
+              formula: {
+                type: "MAX",
+                styleId: "headerStyle1",
+              },
+            },
+            {
+              label: "age",
+              text: "Age",
+              size: 18,
+            },
+            {
+              label: "score",
+              text: "Score",
+              size: 18,
+            },
+          ],
+          data: [
+            {
+              name: "Alice",
+              age: 25,
+              score: 95,
+              outlineLevel: 1,
+              hidden: "0",
+              rowStyle: "cellStyle1",
+              height: 20,
+            },
+            {
+              name: "Bob",
+              age: 30,
+              score: 80,
+              outlineLevel: 1,
+              hidden: "0",
+              rowStyle: "cellStyle1",
+              height: 20,
+            },
+            {
+              name: "Charlie",
+              age: 28,
+              score: 90,
+              outlineLevel: 1,
+              hidden: "0",
+              rowStyle: "cellStyle1",
+              height: 20,
+            },
+            {
+              name: "David",
+              age: 22,
+              score: 75,
+              outlineLevel: 1,
+              hidden: "0",
+              rowStyle: "cellStyle1",
+              height: 20,
+            },
+          ],
+        },
+        {
+          name: "Sheet2",
+          sortAndFilter: {
+            mode: "ref",
+            ref: "A1:B5",
+          },
+          state: "hidden",
+          headers: [
+            {
+              label: "item",
+              text: "Item",
+              size: 16,
+            },
+            {
+              label: "quantity",
+              text: "Quantity",
+              size: 16,
+            },
+          ],
+          data: [
+            {
+              item: "Apples",
+              quantity: 50,
+              outlineLevel: 1,
+              hidden: "1",
+            },
+            {
+              item: "Bananas",
+              quantity: 30,
+              outlineLevel: 1,
+              hidden: "1",
+            },
+            {
+              item: "Oranges",
+              quantity: 40,
+              outlineLevel: 1,
+              hidden: "1",
+            },
+            {
+              item: "Grapes",
+              quantity: 25,
+              outlineLevel: 1,
+              hidden: "1",
+            },
+          ],
+        },
+      ],
+    };
 
-        // Now you can use the 'data' object to work with ExcelTable.
+    // Now you can use the 'data' object to work with ExcelTable.
 
+    function generateExcel() {
+      console.log(data);
+      ExcelTable.generateExcel(data);
+    }
+  </script>
+</body>
 
-       function generateExcel() {
-        console.log(data)
-         ExcelTable.generateExcel(data);
-       }
-    </script>
-  </body>
 </html>

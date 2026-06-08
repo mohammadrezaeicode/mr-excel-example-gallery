@@ -1,5 +1,45 @@
 //<https: //colorhunt.co/palette/f9ed69f08a5db83b5e6a2c70>
 import fetch from "cross-fetch";
+// import * as sharedExamples from "../shared-examples.js";
+// console.log(sharedExamples); 
+const queue = []
+const cache = {}
+let queueRunning = false;
+async function wait(time) {
+  return await new Promise((resolve) => {
+    setTimeout(() => { resolve("passed") }, time)
+  })
+}
+async function startQueue() {
+  while (queue.length > 0) {
+    const { url,
+      resolve,
+      reject } = queue.shift()
+    const response = await callApi(url)
+    cache[url] = response
+    resolve(response)
+    await wait(500)
+  }
+}
+export async function callApiWithQueue(url) {
+  let promiseFunctions = []
+  const apiPromise = new Promise((resolve, reject) => {
+    if (cache[url]) {
+      resolve(cache[url])
+      return
+    }
+    queue.push({
+      url,
+      resolve,
+      reject
+    })
+    if (!queueRunning) {
+      startQueue()
+    }
+  })
+  return await apiPromise
+}
+
 export async function callApi(url) {
   return await fetch(url).then((res) => {
     return res.arrayBuffer();
@@ -2957,12 +2997,12 @@ export function ex16() {
           return u
             ? "headerStyle"
             : i == 0 && o < 0.3
-            ? "c0<0.3"
-            : i == 3
-            ? o
-              ? "male"
-              : "female"
-            : "rowStyle";
+              ? "c0<0.3"
+              : i == 3
+                ? o
+                  ? "male"
+                  : "female"
+                : "rowStyle";
         },
         headers: [
           {

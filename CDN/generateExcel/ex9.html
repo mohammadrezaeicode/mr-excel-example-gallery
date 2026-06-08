@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Example 9</title>
+    <title>Example 9(styleCellCondition)</title>
     <style>
         body {
             background: #222831;
@@ -17,6 +17,7 @@
         }
 
         button {
+            cursor: pointer;
             border: none;
             padding: 5px;
             border-radius: 4px;
@@ -40,7 +41,7 @@
 
 <body>
     <p>For generate Excel please click the below button</p>
-    <button onclick="generateExcel()">Generate Excel</button>
+    <button onclick="generateExcel()" data-testid="generate-excel-btn">Generate Excel</button>
     <div class="link-container">Links: <a href="https://colorhunt.co/palette/2b2e4ae8454590374953354a">Color</a>
         <p> | </p><a
             href="https://github.com/mohammadrezaeicode/mr-excel-page-repo/blob/main/public/img/ex9.PNG?raw=true">Result</a>
@@ -69,11 +70,12 @@
             color: '#FFFFFF'
         }
         const data = {
-            creator: 'mr',
+            creator: 'MR Excel',
+            fileName: "ex9",
             styles: {
                 'c0<0.3': {
                     backgroundColor: 'DCD6F7',
-                    color: '424874s',
+                    color: '424874',
                     ...rowAlignment
                 },
                 male: {

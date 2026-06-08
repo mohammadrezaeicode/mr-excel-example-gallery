@@ -1,0 +1,12 @@
+.github
+tests
+playwright-report
+.git
+Dockerfile
+Dockerfile.*
+docker-*
+*.cmd
+playwright.*
+
+**/node_modules
+**/node_modules/**
