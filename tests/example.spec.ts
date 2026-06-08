@@ -28,16 +28,22 @@ test.afterAll(async () => {
 const files = readdirSync(join(baseLocation, "generateExcel")).filter(
   (name: string) =>
     name.endsWith(".html") &&
-    !name.includes("validator") && //this example include invalid schema so it's not download
-    !name.includes("test"), //it's take time to load
+    !name.includes("validator") &&
+    !name.includes("test"),
 );
+console.log("fileLength:" + files.length);
+
 const emptySheetName = [
-  "ex0-0.xlsx", //no data
-  "ex0.xlsx", // no data
-  "ex21.xlsx", //
+  "ex0-0.xlsx",
+  "ex0.xlsx",
+  "ex21.xlsx",
 ];
+test("validate file list",()=>{
+  expect(files.length).toBeGreaterThan(20)
+})
 const largePayloadError = ["ex1-1.xlsx"];
 files.forEach((filename: string) => {
+  console.log(`start->${filename}`);  
   test(`generateExcel->${filename.substring(0, filename.lastIndexOf("."))} download file example`, async ({
     page,
   }) => {
@@ -45,7 +51,7 @@ files.forEach((filename: string) => {
     await page.goto(`http://localhost/generateExcel/${filename}`);
 
     const downloadPromise = page.waitForEvent("download");
-    // Expects page to have a heading with the name of Installation.
+   
     {
       const downloadBtn = await page.getByTestId("generate-excel-btn");
       await expect(downloadBtn).toBeVisible();
@@ -55,15 +61,15 @@ files.forEach((filename: string) => {
     const downloadFileName = download.suggestedFilename();
     expect(downloadFileName.endsWith(".xlsx")).toBeTruthy();
 
-    // Save the file to a local path
+   
     const savePath = join("downloads", downloadFileName);
     await download.saveAs(savePath);
 
-    // ✅ Assert: file exists on disk
+   
     expect(existsSync(savePath)).toBe(true);
     const stats = statSync(savePath);
     const fileSizeInBytes = stats.size;
-    expect(fileSizeInBytes).toBeGreaterThan(1); //greater then 1B;
+    expect(fileSizeInBytes).toBeGreaterThan(1);
     if (largePayloadError.includes(downloadFileName)) {
       return;
     }
@@ -112,8 +118,7 @@ files.forEach((filename: string) => {
         body,
       );
     }
-    // expect(body).toHaveProperty("file_url");
-    // expect(body.filename).toBe("sample.pdf");
-    expect(fileSizeInBytes).toBeLessThan(10 * 1024 * 1024); //less then 10MB;
+    expect(fileSizeInBytes).toBeLessThan(10 * 1024 * 1024);
+    console.log("done->" + downloadFileName);
   });
 });
