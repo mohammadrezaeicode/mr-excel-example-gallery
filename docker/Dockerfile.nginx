@@ -21,6 +21,8 @@ RUN npm run build -- --base-href /app/
 # Final Nginx image
 FROM nginx:alpine
 
+RUN apk add --no-cache curl
+
 # Static website
 COPY CDN/ /usr/share/nginx/html/static/
 

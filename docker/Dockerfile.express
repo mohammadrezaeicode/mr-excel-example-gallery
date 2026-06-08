@@ -25,6 +25,8 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY express/. .
 COPY shared-example ./node_modules/shared-example
 
+RUN apk add --no-cache curl
+
 # Set ownership
 RUN chown -R appuser:appgroup /app
 USER appuser
