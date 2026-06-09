@@ -1,7 +1,26 @@
+ARG MR_EXCEL_VERSION=V8.0.0
+# clone MR-excel-repo
+FROM alpine/git:latest AS excel
+
+WORKDIR /app
+ARG MR_EXCEL_VERSION
+ARG REPO_URL=https://github.com/mohammadrezaeicode/mr-excel-repo.git
+
+RUN git clone --no-checkout --depth 1 \
+--filter=blob:none --sparse --branch \
+ ${MR_EXCEL_VERSION} ${REPO_URL} excel
+WORKDIR /app/excel
+RUN git sparse-checkout init --no-cone && \
+ git sparse-checkout set dist
+RUN git checkout ${MR_EXCEL_VERSION}
+WORKDIR /app/excel/dist
+RUN echo "FROM REPO" > ref.txt
+WORKDIR /app
+
 # Build Angular app
 FROM node:24-alpine AS angular-builder
 WORKDIR /app
-ARG MR_EXCEL_VERSION=V8.0.0
+ARG MR_EXCEL_VERSION
 
 COPY angular/package*.json ./
 
@@ -25,6 +44,10 @@ RUN apk add --no-cache curl
 
 # Static website
 COPY CDN/ /usr/share/nginx/html/static/
+
+# RUN if [-d "/usr/share/nginx/html/static/dist"]; then mv /usr/share/nginx/html/static/dist /usr/share/nginx/html/static/_dist;fi
+RUN if [-d "/usr/share/nginx/html/static/dist"]; then rm -rf /usr/share/nginx/html/static/dist;fi
+COPY --from=excel /app/excel/dist /usr/share/nginx/html/static/dist
 
 # Angular build output
 COPY --from=angular-builder \
