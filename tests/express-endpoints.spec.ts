@@ -60,6 +60,7 @@ test("Express endpoints /ex2/:id generate all examples and save Excel reports", 
       const filePath = join(reportFolder, item.file);
       writeFileSync(filePath, body);
       expect(existsSync(filePath)).toBeTruthy();
+      console.log(`convert->${item.path}`);
       const imageResponse = await imageGeneratorApiContext.post(
         "/convert?empty=1",
         {

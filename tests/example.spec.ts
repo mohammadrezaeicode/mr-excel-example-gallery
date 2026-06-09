@@ -74,7 +74,8 @@ files.forEach((filename: string) => {
       return;
     }
 
-    const fileBuffer = readFileSync(savePath);
+    const fileBuffer = readFileSync(savePath); 
+    console.log(`convert->${downloadFileName}`);
     const response = await apiContext.post("/convert", {
       multipart: {
         file: {
