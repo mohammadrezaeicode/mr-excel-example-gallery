@@ -50,7 +50,6 @@ test("Express endpoints /ex2/:id generate all examples and save Excel reports", 
     const responses = [{ path: `/ex2/${id}`, file: `ex2-${id}.xlsx` }];
 
     for (const item of responses) {
-      console.log(`start->${item.path}`);
 
       const res = await expressApiContext.get(item.path);
       expect(res.ok()).toBeTruthy();
@@ -60,7 +59,6 @@ test("Express endpoints /ex2/:id generate all examples and save Excel reports", 
       const filePath = join(reportFolder, item.file);
       writeFileSync(filePath, body);
       expect(existsSync(filePath)).toBeTruthy();
-      console.log(`convert->${item.path}`);
       const imageResponse = await imageGeneratorApiContext.post(
         "/convert?empty=1",
         {
@@ -88,7 +86,6 @@ test("Express endpoints /ex2/:id generate all examples and save Excel reports", 
         ),
         imageBody,
       );
-      console.log(`end->${item.path}`);
     }
   }
 });

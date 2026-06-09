@@ -71,7 +71,7 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       timeout-minutes: 45     
-      run: npm test -- tests/example.spec.ts
+      run: npm test
     - uses: actions/upload-artifact@v7
       # if: ${{ !cancelled() }}
       if: always()

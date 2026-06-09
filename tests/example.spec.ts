@@ -31,7 +31,6 @@ const files = readdirSync(join(baseLocation, "generateExcel")).filter(
     !name.includes("validator") &&
     !name.includes("test"),
 );
-console.log("fileLength:" + files.length);
 
 const emptySheetName = [
   "ex0-0.xlsx",
@@ -43,11 +42,10 @@ test("validate file list",()=>{
 })
 const largePayloadError = ["ex1-1.xlsx"];
 files.forEach((filename: string) => {
-  console.log(`start->${filename}`);  
   test(`generateExcel->${filename.substring(0, filename.lastIndexOf("."))} download file example`, async ({
     page,
   }) => {
-    await page.waitForTimeout(1_000);
+    await page.waitForTimeout(1_000)
     await page.goto(`http://localhost/generateExcel/${filename}`);
 
     const downloadPromise = page.waitForEvent("download");
@@ -75,7 +73,6 @@ files.forEach((filename: string) => {
     }
 
     const fileBuffer = readFileSync(savePath); 
-    console.log(`convert->${downloadFileName}`);
     const response = await apiContext.post("/convert", {
       multipart: {
         file: {
@@ -120,6 +117,5 @@ files.forEach((filename: string) => {
       );
     }
     expect(fileSizeInBytes).toBeLessThan(10 * 1024 * 1024);
-    console.log("done->" + downloadFileName);
   });
 });
