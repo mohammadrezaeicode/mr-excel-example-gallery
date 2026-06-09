@@ -6,6 +6,9 @@ on:
     branches: [ main, master ]
   workflow_dispatch:   # allows external triggers
     inputs:
+      branch:
+        description: Branch of MR-Excel-Repo
+        default: main
       reason:
         description: 'Why this was triggered'
         required: false
@@ -28,6 +31,11 @@ jobs:
       with:
         submodules: true
         token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create .env file
+      run: |
+        cat > .env << EOF
+        MR_EXCEL_VERSION=${{ inputs.branch }}
+        EOF
     - name: Build & start services
       run: docker compose up -d --build
 
